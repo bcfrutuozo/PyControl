@@ -1,6 +1,3 @@
-from nfse.classes.abrasf_nfsev20 import *
-
-
 class NFSe_Envio_RPS:
 
     def __init__(self, CPFCNPJRemetente : str, InscricaoPrestador, SerieRPS, NumeroRPS, TipoRPS, DataEmissao ,StatusRPS, TributacaoRPS,

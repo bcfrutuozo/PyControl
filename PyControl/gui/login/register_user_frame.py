@@ -3,19 +3,19 @@ from tkinter import messagebox
 from functions import *
 import io
 from widgets.video_cam import *
-from database.login import *
+from database.login_db import *
 from gui.frame_base import FrameBase
 
 
 class RegisterUserFrame(FrameBase):
     def __init__(self, master):
-        super().__init__(master, window_title='Cadastro de Usuário', window_width=540, window_height=840, centralize_window=False)
+        super().__init__(master, window_title='Cadastro de Usuário', window_width=510, window_height=840, centralize_window=False)
         self.initialize_driver()
 
     def setup_frame(self):
 
         self.back_button = ctk.CTkButton(
-            master=self.frame,
+            master=self,
             width=15,
             height=30,
             text="◀️",  # Use the left arrow character as the text
@@ -28,40 +28,40 @@ class RegisterUserFrame(FrameBase):
         self.back_button.place(x=10, y=10)
 
         # Entry fields for registration form
-        self.name_entry = ctk.CTkEntry(master=self.frame, width=400, placeholder_text="Nome")
+        self.name_entry = ctk.CTkEntry(master=self, width=400, placeholder_text="Nome")
         self.name_entry.place(x=50, y=55)
 
-        self.username_entry = ctk.CTkEntry(master=self.frame, width=400, placeholder_text="Login")
+        self.username_entry = ctk.CTkEntry(master=self, width=400, placeholder_text="Login")
         self.username_entry.place(x=50, y=85)
 
-        self.email_entry = ctk.CTkEntry(master=self.frame, width=400, placeholder_text="Entre com seu e-mail")
+        self.email_entry = ctk.CTkEntry(master=self, width=400, placeholder_text="Entre com seu e-mail")
         self.email_entry.place(x=50, y=115)
 
-        self.p_block = ctk.CTkEntry(master=self.frame, width=400, placeholder_text="Digite a sua senha", show="*")
+        self.p_block = ctk.CTkEntry(master=self, width=400, placeholder_text="Digite a sua senha", show="*")
         self.p_block.place(x=50, y=145)
 
-        self.security_question_label = ctk.CTkLabel(master=self.frame, text="Pergunta secreta", font=('Century Gothic', 10))
+        self.security_question_label = ctk.CTkLabel(master=self, text="Pergunta secreta", font=('Century Gothic', 10))
         self.security_question_label.place(x=50, y=175)
 
         self.security_questions = ["Qual o primeiro nome da sua mãe?", "Qual seu nome favorito de pet?", "Aonde você nasceu?", "Qual seu filme favorito?", "Qual o seu herói de infância?"]
         self.security_question_var = ctk.StringVar(value="Selecione a sua pergunta secreta")
-        self.security_question_dropdown = ctk.CTkComboBox(master=self.frame, variable=self.security_question_var, values=self.security_questions, width=400, state="readonly")
+        self.security_question_dropdown = ctk.CTkComboBox(master=self, variable=self.security_question_var, values=self.security_questions, width=400, state="readonly")
         self.security_question_dropdown.place(x=50, y=205)
 
         # Security Answer entry field
-        self.security_answer_entry = ctk.CTkEntry(master=self.frame, width=400, placeholder_text="Resposta secreta")
+        self.security_answer_entry = ctk.CTkEntry(master=self, width=400, placeholder_text="Resposta secreta")
         self.security_answer_entry.place(x=50, y=235)
 
         # Webcam widget
-        self.webcam = VideoStreamWidget(master=self.frame, width=600, height=560, enable_start_stop=True, enable_snapshot=False)
+        self.webcam = VideoStreamWidget(master=self, width=600, height=560, enable_start_stop=True, enable_snapshot=False)
         self.webcam.place(x=50, y=270)
 
         # Registration button
-        self.register_button = ctk.CTkButton(master=self.frame, width=150, text="Cadastrar",
+        self.register_button = ctk.CTkButton(master=self, width=150, text="Cadastrar",
                                                   corner_radius=6,
                                                   fg_color="#3498db", text_color="#ffffff", hover_color="#2980b9",
                                                   command=self.new_user_data)
-        self.register_button.place(x=self.frame_width/2, y=755, anchor=ctk.CENTER)
+        self.register_button.place(x=self.window_width/2, y=755, anchor=ctk.CENTER)
 
     def initialize_driver(self):
         self.webcam.initialize_driver()

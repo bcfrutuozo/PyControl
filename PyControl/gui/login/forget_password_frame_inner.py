@@ -1,6 +1,6 @@
 from gui.frame_base import FrameBase
 import customtkinter as ctk
-from database.login import *
+from database.login_db import *
 from functions import generate_temporary_password, send_password_reset_email
 from tkinter import messagebox
 
@@ -13,7 +13,7 @@ class ForgotPasswordInnerFrame(FrameBase):
     def setup_frame(self):
 
         self.back_button = ctk.CTkButton(
-            master=self.frame,
+            master=self,
             width=15,
             height=30,
             text="◀️",  # Use the left arrow character as the text
@@ -25,21 +25,21 @@ class ForgotPasswordInnerFrame(FrameBase):
         )
         self.back_button.place(x=10, y=10)
 
-        self.text = ctk.CTkLabel(master=self.frame, text="Step 2", font=('Century Gothic', 25))
-        self.text.place(x=50, y=45)
+        self.text = ctk.CTkLabel(master=self, text="Step 2", font=('Century Gothic', 25))
+        self.text.place(x=70, y=75)
 
         # Security Question entry block
         security_question = DATABASE_LOGIN.get_security_question(self.user_email)  # You can pass user_email here or retrieve it from somewhere
-        self.security_question_label = ctk.CTkLabel(master=self.frame, text=security_question, font=('Century Gothic', 14))
-        self.security_question_label.place(x=50, y=110)
+        self.security_question_label = ctk.CTkLabel(master=self, text=security_question, font=('Century Gothic', 14))
+        self.security_question_label.place(x=70, y=140)
 
         # Security Answer entry block
-        self.security_answer_block = ctk.CTkEntry(master=self.frame, width=220, placeholder_text="Security Answer")
-        self.security_answer_block.place(x=50, y=160)
+        self.security_answer_block = ctk.CTkEntry(master=self, width=220, placeholder_text="Security Answer")
+        self.security_answer_block.place(x=70, y=190)
 
         # Submit button for step 2
-        self.submit_button2 = ctk.CTkButton(master=self.frame, width=100, text="Reset Password", corner_radius=6, fg_color="#3498db", text_color="#ffffff", hover_color="#2980b9", command=self.handle_reset_password)
-        self.submit_button2.place(x=110, y=230)
+        self.submit_button2 = ctk.CTkButton(master=self, width=100, text="Reset Password", corner_radius=6, fg_color="#3498db", text_color="#ffffff", hover_color="#2980b9", command=self.handle_reset_password)
+        self.submit_button2.place(x=130, y=260)
 
     def back_button_click(self):
         self.master.destroy_all_frames()

@@ -1,9 +1,10 @@
-from gui.application_frame import ApplicationFrame
+from gui.application.application_frame import ApplicationFrame
 from gui.functions import *
 from gui.login.login_frame import *
 from gui.login.register_user_frame import *
 from gui.login.forgot_password_frame import *
 from gui.login.forget_password_frame_inner import *
+import tkinter as tk
 
 ctk.set_appearance_mode("System")
 ctk.set_default_color_theme("blue")
@@ -19,7 +20,11 @@ class MainApp(ctk.CTk):
         self.frames = {}
 
         # Create the Main frame
-        self.open_login_frame(first_time=True)
+        #self.open_login_frame(first_time=True)
+        self.authenticated_user = 'bcfrutuozo'
+
+        self.main_frame = MainFrame(self, True)
+        self.open_application_frame()
 
     def change_geometry(self, width, height, centralize=False):
         if not centralize:
@@ -30,6 +35,12 @@ class MainApp(ctk.CTk):
     def change_title(self, new_title):
         # Change the window geometry
         self.title(new_title)
+
+    def disable_resize(self):
+        self.resizable(width=False, height=False)
+
+    def enable_resize(self):
+        self.resizable(width=True, height=True)
 
     def open_register_user_frame(self):
         self.main_frame.destroy()
@@ -59,7 +70,7 @@ class MainApp(ctk.CTk):
 
     def open_application_frame(self):
         self.main_frame.destroy()
-        self.main_frame = ApplicationFrame(self, self.authenticated_user)
+        self.main_frame = ApplicationFrame(self, 1440, 900, self.authenticated_user)
         self.main_frame.pack(expand=True, fill="both")
 
     def destroy_all_frames(self):

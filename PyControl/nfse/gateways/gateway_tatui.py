@@ -1,15 +1,18 @@
 # coding: utf-8
 from nfse.rps import Rps
 from nfse.response import Response
-from nfse.schemas import schemaCreateRps, schemaCancelRps, schemaConsultNfes
 from nfse.functions import stringEncode, stringDecode
 from requests import post
+from nfse.serializers.abrasf_ev20 import *
 
 
 class TatuiGateway:
 
     @classmethod
-    def sendRps(cls, privateKey, certificate, **kwargs):
+    def sendRps(cls, privateKey, certificate, nfse):
+
+        schemaCreateRps = SerializacaoBetha().gerar(nfse)
+
         xml = Rps.xmlCreateRps(
             xml=schemaCreateRps,
             privateKeyContent=privateKey,
@@ -27,6 +30,9 @@ class TatuiGateway:
 
     @classmethod
     def cancelRps(cls, privateKey, certificate, **kwargs):
+
+        schemaCancelRps = SerializacaoBetha().cancelar(**kwargs)
+
         xml = Rps.cancelRps(
             xml=schemaCancelRps,
             privateKeyContent=privateKey,
@@ -44,6 +50,9 @@ class TatuiGateway:
 
     @classmethod
     def consultNfes(cls, privateKey, certificate, **kwargs):
+
+        schemaConsultNfes = SerializacaoBetha().consultar_rps(**kwargs)
+
         xml = Rps.consultNfes(
             xml=schemaConsultNfes,
             privateKeyContent=privateKey,

@@ -1,4 +1,4 @@
-from nfse.classes.abrasf_nfsev20 import (
+from nfse.classes.proxies.proxy_abrasf_nfse_v20 import (
     Cabecalho,
     CancelarNfseEnvio,
     CancelarNfseResposta,

@@ -3,12 +3,13 @@ from nfse.rsa import RSA
 from nfse.currency import Currency
 from nfse.certificate import Certificate
 from nfse.functions import stringDecode
+from nfse.serializers.abrasf_ev20 import *
 
 
 class Rps:
 
     @classmethod
-    def xmlCreateRps(cls, xml, InscricaoPrestador, SerieRPS, NumeroRPS, TipoRPS, DataEmissao, StatusRPS, ValorServicos,
+    def xmlCreateRps(cls, InscricaoPrestador, SerieRPS, NumeroRPS, TipoRPS, DataEmissao, StatusRPS, ValorServicos,
                      ValorDeducoes, CodigoServico, ISSRetido, CPFCNPJTomador, CPFCNPJRemetente, TributacaoRPS, ValorPIS,
                      ValorCOFINS, ValorINSS, ValorIR, ValorCSLL, AliquotaServicos, RazaoSocialTomador, Logradouro,
                      NumeroEndereco, ComplementoEndereco, Bairro, Cidade, UF, CEP, EmailTomador, Discriminacao,

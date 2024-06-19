@@ -1,6 +1,6 @@
 import customtkinter as ctk
 from tkinter import messagebox
-from database.login import *
+from database.login_db import *
 from functions import is_valid_email
 from gui.frame_base import FrameBase
 
@@ -13,7 +13,7 @@ class ForgotPasswordFrame(FrameBase):
     def setup_frame(self):  # Correct method name
 
         self.back_button = ctk.CTkButton(
-            master=self.frame,
+            master=self,
             width=15,
             height=30,
             text="◀️",  # Use the left arrow character as the text
@@ -25,18 +25,18 @@ class ForgotPasswordFrame(FrameBase):
         )
         self.back_button.place(x=10, y=10)
 
-        self.text = ctk.CTkLabel(master=self.frame, text="Entre com o seu E-Mail", font=('Century Gothic', 25))
-        self.text.place(x=self.frame_width/2, y=75, anchor=ctk.CENTER)
+        self.text = ctk.CTkLabel(master=self, text="Entre com o seu E-Mail", font=('Century Gothic', 25))
+        self.text.place(x=self.window_width/2, y=75, anchor=ctk.CENTER)
         # Email entry block
-        self.email_block = ctk.CTkEntry(master=self.frame, width=220, placeholder_text="E-Mail")
+        self.email_block = ctk.CTkEntry(master=self, width=220, placeholder_text="E-Mail")
 
         if not self.user_email is None:
             self.email_block.insert(0, self.user_email)
 
-        self.email_block.place(x=self.frame_width/2, y=140, anchor=ctk.CENTER)
+        self.email_block.place(x=self.window_width/2, y=140, anchor=ctk.CENTER)
         # Submit button
-        self.submit_button = ctk.CTkButton(master=self.frame, width=100, text="Submit", corner_radius=6, fg_color="#3498db", text_color="#ffffff", hover_color="#2980b9", command=self.handle_reset_password)
-        self.submit_button.place(x=self.frame_width/2, y=190, anchor=ctk.CENTER)
+        self.submit_button = ctk.CTkButton(master=self, width=100, text="Submit", corner_radius=6, fg_color="#3498db", text_color="#ffffff", hover_color="#2980b9", command=self.handle_reset_password)
+        self.submit_button.place(x=self.window_width/2, y=190, anchor=ctk.CENTER)
 
     def back_button_click(self):
         self.master.destroy_all_frames()

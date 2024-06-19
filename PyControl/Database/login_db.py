@@ -13,7 +13,7 @@ class DBLogin(DBBase):
         try:
 
             # Check if the provided username and password match a record in the Users table
-            cursor.execute("SELECT username, password FROM Users WHERE username = ? AND password = ?", (username, encrypt_passphrase(password)))
+            cursor.execute("SELECT login, senha FROM usuarios WHERE login = ? AND senha = ?", (username, encrypt_passphrase(password)))
             result = cursor.fetchone()
 
             # If a matching record is found, return True for a successful login
@@ -36,22 +36,22 @@ class DBLogin(DBBase):
         try:
             # Create a Users table if it doesn't exist
             cursor.execute('''
-                CREATE TABLE IF NOT EXISTS "Users" (
-                    "id_user"	INTEGER NOT NULL,
-                    "name"	TEXT NOT NULL,
-                    "username"	TEXT NOT NULL UNIQUE,
+                CREATE TABLE IF NOT EXISTS "usuarios" (
+                    "id_usuario"	INTEGER NOT NULL,
+                    "nome"	TEXT NOT NULL,
+                    "login"	TEXT NOT NULL UNIQUE,
                     "email"	TEXT NOT NULL UNIQUE,
-                    "password"	TEXT NOT NULL,
-                    "security_question"	TEXT NOT NULL,
-                    "security_answer"	TEXT NOT NULL,
-                    "photo"	BLOB NOT NULL,
-                    PRIMARY KEY("id_user" AUTOINCREMENT)
+                    "senha"	TEXT NOT NULL,
+                    "pergunta_secreta"	TEXT NOT NULL,
+                    "resposta_secreta"	TEXT NOT NULL,
+                    "foto"	BLOB NOT NULL,
+                    PRIMARY KEY("id_usuario" AUTOINCREMENT)
                 )
             ''')
 
             # Insert user data into the Users table
             cursor.execute('''
-                INSERT INTO Users (name, username, email, password, security_question, security_answer, photo)
+                INSERT INTO usuarios (nome, login, email, senha, pergunta_secreta, resposta_secreta, foto)
                 VALUES (?, ?, ?, ?, ?, ?, ?)
             ''', (name, username, email, encrypt_passphrase(password), security_question, security_answer.lower(), photo))
 
@@ -70,7 +70,7 @@ class DBLogin(DBBase):
     def email_exists(self, email):
         db, cursor = self.open()
         try:
-            cursor.execute("SELECT * FROM Users WHERE email = ?", (email,))
+            cursor.execute("SELECT * FROM usuarios WHERE email = ?", (email,))
             user = cursor.fetchone()
 
             return user
@@ -83,7 +83,7 @@ class DBLogin(DBBase):
         db, cursor = self.open()
         try:
             # Update the user's password with the temporary password
-            update_query = "UPDATE Users SET password = ? WHERE email = ?"
+            update_query = "UPDATE usuarios SET senha = ? WHERE email = ?"
             cursor.execute(update_query, (encrypt_passphrase(temporary_password), email))
 
             # Commit the changes to the database
@@ -103,7 +103,7 @@ class DBLogin(DBBase):
         db, cursor = self.open()
         try:
             # Assuming you have a table called 'users' with columns 'email', 'security_question', and 'security_answer'
-            cursor.execute("SELECT security_question FROM users WHERE email = ?", (email,))
+            cursor.execute("SELECT pergunta_secreta FROM usuarios WHERE email = ?", (email,))
             result = cursor.fetchone()
 
             if result:
@@ -121,7 +121,7 @@ class DBLogin(DBBase):
         db, cursor = self.open()
         try:
             # Assuming you have a table called 'users' with columns 'email', 'security_question', and 'security_answer'
-            cursor.execute("SELECT security_answer FROM users WHERE email = ?", (email,))
+            cursor.execute("SELECT resposta_secreta FROM usuarios WHERE email = ?", (email,))
             result = cursor.fetchone()
 
             if result:
